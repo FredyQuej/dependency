@@ -3,3 +3,6 @@ Integrantes:
 FREDY QUEJ
 JOSE PUTUL
 AGUEDA
+
+fuente: 
+https://github.com/guillermoyacob/sistemadeinventario 
