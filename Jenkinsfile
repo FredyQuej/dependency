@@ -1,11 +1,11 @@
 pipeline {
     agent any
-
+/*
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Nombre de la rama para construir')
         choice(name: 'ENVIRONMENT', choices: ['development', 'staging', 'production'], description: 'Entorno de despliegue')
     }
-
+*/
     stages {
         stage('Checkout') {
             steps {
