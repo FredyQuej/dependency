@@ -34,13 +34,13 @@ pipeline {
             steps {
                 echo "Desplegando en el entorno: ${params.ENVIRONMENT}"
                 // Despliega los archivos al servidor correspondiente según el entorno
-                if (params.ENVIRONMENT == 'production') {
+              /*  if (params.ENVIRONMENT == 'production') {
                     sh 'scp -r * usuario@produccion:/ruta/del/servidor'
                 } else if (params.ENVIRONMENT == 'staging') {
                     sh 'scp -r * usuario@staging:/ruta/del/servidor'
                 } else {
                     sh 'scp -r * usuario@development:/ruta/del/servidor'
-                }
+                }*/
             }
         }
     }
