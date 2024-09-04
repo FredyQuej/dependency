@@ -1,11 +1,6 @@
 pipeline {
     agent any
-/*
-    parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Nombre de la rama para construir')
-        choice(name: 'ENVIRONMENT', choices: ['development', 'staging', 'production'], description: 'Entorno de despliegue')
-    }
-*/
+
     stages {
         stage('Checkout') {
             steps {
@@ -34,13 +29,7 @@ pipeline {
             steps {
                 echo "Desplegando en el entorno: ${params.ENVIRONMENT}"
                 // Despliega los archivos al servidor correspondiente según el entorno
-              /*  if (params.ENVIRONMENT == 'production') {
-                    sh 'scp -r * usuario@produccion:/ruta/del/servidor'
-                } else if (params.ENVIRONMENT == 'staging') {
-                    sh 'scp -r * usuario@staging:/ruta/del/servidor'
-                } else {
-                    sh 'scp -r * usuario@development:/ruta/del/servidor'
-                }*/
+           
             }
         }
     }
