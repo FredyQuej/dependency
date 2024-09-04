@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Clonando el código desde la rama: ${params.BRANCH_NAME}"
-                git branch: "${params.BRANCH_NAME}", url: 'https://github.com/bcaal87/starkhouse.git'
+                git branch: "${params.BRANCH_NAME}", url: 'https://github.com/FredyQuej/dependency.git'
             }
         }
 
