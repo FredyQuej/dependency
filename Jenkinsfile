@@ -1,45 +1,46 @@
 pipeline {
     agent any
 
+    environment {
+        DTRACK_API_KEY = credentials('odt_A1GPIYWhuRLVbL4fYBVJU9YY3Q4Yv3yX')
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                echo "Clonando el código desde la rama: ${params.BRANCH_NAME}"
-                git branch: "${params.BRANCH_NAME}", url: 'https://github.com/FredyQuej/dependency.git'
+                git url: 'https://github.com/FredyQuej/dependency.git', branch: 'main'
             }
         }
 
-        stage('Validate HTML') {
+        stage('Build') {
             steps {
-                echo "Validando archivos HTML..."
-                // Valida todos los archivos HTML en el proyecto
-                sh 'tidy -errors -q *.html || true'
+                sh './mvnw clean install'
             }
         }
 
-        stage('Validate JavaScript') {
+        stage('Generate Dependency Report') {
             steps {
-                echo "Validando archivos JavaScript..."
-                // Valida todos los archivos JavaScript en el proyecto
-                sh 'jshint **/*.js || true'
+                sh './mvnw dependency-track:upload'
             }
         }
 
-        stage('Deploy') {
+        stage('Upload Report to Dependency-Track') {
             steps {
-                echo "Desplegando en el entorno: ${params.ENVIRONMENT}"
-                // Despliega los archivos al servidor correspondiente según el entorno
-           
+                script {
+                    sh '''
+                        curl -X POST -H "Authorization: Bearer ${DTRACK_API_KEY}" \
+                        -F "file=@/path/to/your/report" \
+                        http://dependency-track:8084/api/v1/components
+                    '''
+                }
             }
         }
     }
 
     post {
-        success {
-            echo 'El pipeline se ha completado exitosamente.'
-        }
-        failure {
-            echo 'El pipeline ha fallado.'
+        always {
+            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
         }
     }
 }
+
